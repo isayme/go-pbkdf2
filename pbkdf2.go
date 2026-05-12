@@ -22,7 +22,8 @@ import (
 type Params struct {
 	// Iterations is the number of iterations.
 	Iterations int
-	Digest     string
+	// Digest is the hash function to use. Supported values: sha1, sha256, sha512.
+	Digest string
 	// KeyLen is the length of the derived key.
 	KeyLen int
 }
