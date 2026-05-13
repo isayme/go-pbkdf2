@@ -40,6 +40,7 @@ if !ok {
 params := pbkdf2.Params{
     Iterations: 100000,
     KeyLen:     32,
+    SaltLen:    16,
     Digest:     "sha256",
 }
 

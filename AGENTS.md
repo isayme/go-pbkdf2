@@ -8,8 +8,8 @@ go-pbkdf2 是一个轻量级的 PBKDF2 密码哈希和校验库，基于 golang.
 
 ### pbkdf2.go
 
-- `Params` 结构体：定义 PBKDF2 参数 (Iterations, KeyLen)
-- `DefaultParams`：默认参数 (Iterations=100000, KeyLen=32)
+- `Params` 结构体：定义 PBKDF2 参数 (Iterations, KeyLen, SaltLen, Digest)
+- `DefaultParams`：默认参数 (Iterations=100000, KeyLen=32, SaltLen=16, Digest=sha256)
 - `Hash(password, params)`：生成密码哈希，自动生成 salt
 - `Verify(password, hashed)`：校验密码是否匹配，使用 constant-time 比较防止时序攻击
 - `parseHashed()`：内部函数，解析哈希字符串提取参数和原始数据

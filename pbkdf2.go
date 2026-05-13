@@ -24,6 +24,9 @@ type Params struct {
 	Iterations int
 	// Digest is the hash function to use. Supported values: sha1, sha256, sha512.
 	Digest string
+
+	// SaltLen is the length of the salt.
+	SaltLen int
 	// KeyLen is the length of the derived key.
 	KeyLen int
 }
@@ -32,8 +35,9 @@ type Params struct {
 // Iterations=100000, KeyLen=32
 var DefaultParams = Params{
 	Iterations: 100000,
-	KeyLen:     32,
 	Digest:     "sha256",
+	KeyLen:     32,
+	SaltLen:    16,
 }
 
 func randomBytes(len int) ([]byte, error) {
@@ -58,7 +62,7 @@ func getHash(digest string) func() hash.Hash {
 // Hash generates a PBKDF2 hash of the password with the given parameters.
 // The hash format is $pbkdf2-<digest>$i=<iterations>$<salt>$<key>.
 func Hash(password string, params Params) (string, error) {
-	salt, err := randomBytes(16)
+	salt, err := randomBytes(params.SaltLen)
 	if err != nil {
 		return "", err
 	}
@@ -105,7 +109,7 @@ func parseHashed(hashed string) (key, salt []byte, params Params, err error) {
 		}
 
 		switch kv[0] {
-		case "i":
+		case "i", "I":
 			params.Iterations = val
 		}
 	}
